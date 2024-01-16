@@ -1,0 +1,34 @@
+{
+    "name": "kasperhartwich/ticketbutler",
+    "description": "Ticketbutler.io API Integration.",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Kasper Hartwich",
+            "email": "kasperhartwich@gmail.com"
+        }
+    ],
+    "require": {
+        "guzzlehttp/guzzle": "^7.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^10.0",
+        "laravel/helpers": "^1.7"
+    },
+    "autoload": {
+        "psr-4": {
+            "Ticketbutler\\": "src/",
+            "Ticketbutler\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Ticketbutler\\TicketbutlerServiceProvider"
+            ],
+            "aliases": {
+                "Ticketbutler": "Ticketbutler\\TicketbutlerFacade"
+            }
+        }
+    }
+}
