@@ -10,7 +10,7 @@ class TicketbutlerServiceProvider extends ServiceProvider
     {
         $this->publishes([
             __DIR__.'/../config/ticketbutler.php' => config_path('ticketbutler.php'),
-        ]);
+        ], 'ticketbutler-config');
     }
 
     public function register(): void

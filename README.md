@@ -6,6 +6,10 @@
 
 This is a client for the [Ticketbutler API](https://lab.ticketbutler.io).
 
+## Requirements
+* PHP 8.1
+* Laravel =>8.x
+
 ## Installation
 
 You can install the package via composer:
@@ -22,8 +26,22 @@ TICKETBUTLER_TOKEN=your-token
 TICKETBUTLER_DOMAIN=example.com
 ```
 
+If you want to publish the config file you can run:
+``` bash
+php artisan vendor:publish --tag=ticketbutler
+```
+
 ## Usage
 
+### General
+``` php
+use Ticketbutler\Ticketbutler;
+
+$ticketbutler = new Ticketbutler('your-api-token', 'example.com');
+$tickets = $ticketbutler->getTickets();
+```
+    
+### Laravel
 ``` php
 use Ticketbutler\Ticketbutler;
 
@@ -39,7 +57,7 @@ class MyController extends Controller
 ## Testing
 
 ``` bash
-vendor/bin/phpunit
+composer test
 ```
 
 ## Supported API methods
