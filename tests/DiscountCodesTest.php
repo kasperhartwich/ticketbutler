@@ -1,4 +1,5 @@
 <?php
+
 namespace Ticketbutler\Tests;
 
 use GuzzleHttp\Psr7\Response;
