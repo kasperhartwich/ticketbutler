@@ -61,6 +61,12 @@ class Ticketbutler
         return json_decode($response->getBody()->getContents(), true);
     }
 
+    public function getCollectedDataFromOrder($orderUuid): array
+    {
+        $response = $this->client->get('orders/' . str_replace('-', '', $orderUuid) . '/questions/');
+        return json_decode($response->getBody()->getContents(), true);
+    }
+
     /** Event Discount codes */
     public function getEventDiscountCodes($eventUuid): array
     {

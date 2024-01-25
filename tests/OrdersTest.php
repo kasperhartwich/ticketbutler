@@ -22,4 +22,20 @@ final class OrdersTest extends TestCase
         $this->assertSame('Kasper Hartwich', $eventOrders['orders'][1]['tickets'][0]['full_name']);
         $this->assertSame('PAID', $eventOrders['orders'][1]['state']);
     }
+
+    public function test_get_collected_data_from_order(): void
+    {
+        $this->httpResponses = [
+            new Response(
+                200,
+                ['Content-Type' => 'application/json'],
+                '{"purchase":"d2fc0aa042cc4410be9b9107ede843cc","answers":[{"uuid":"75bc3918c7034c8281e09d2c4e489864","question":"bb6746867c7246a287c46650f4a64c00","variation":"COMPANY","question_heading":"Company","answer_value":"Super Firma","answered_choices":[]},{"uuid":"e657075dd82c4e44bd0ed31146244b6f","question":"dcb8f31d60414539b70fc823daa985fa","variation":"TEXT","question_heading":"Address","answer_value":"Frederiksberg Allé 2","answered_choices":[]},{"uuid":"6641f90d2f624ee2a7b0a48c9d4c73e0","question":"d3de27bb274a488c82f6861b335c38bc","variation":"TEXT","question_heading":"Zipcode","answer_value":"2000","answered_choices":[]},{"uuid":"a7e8cd04ac8e4ef88e17cc1044a73dd9","question":"318090ed39c94af09a309ff4855af5d2","variation":"TEXT","question_heading":"City","answer_value":"Frederiksberg","answered_choices":[]},{"uuid":"09cf894e9d0b48f793f15cff8b1c7bf1","question":"2aa67a402f74447fa805222a22a156d7","variation":"TEXT","question_heading":"Country","answer_value":"Denmark","answered_choices":[]}]}'),
+        ];
+
+        $answers = $this->ticketbutler()->getCollectedDataFromOrder('d2fc0aa0-42cc-4410-be9b-9107ede843cc');
+
+        $this->assertSame('d2fc0aa042cc4410be9b9107ede843cc', $answers['purchase']);
+        $this->assertSame('Company', $answers['answers'][0]['question_heading']);
+        $this->assertSame('Super Firma', $answers['answers'][0]['answer_value']);
+    }
 }
