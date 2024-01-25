@@ -1,4 +1,9 @@
 # Ticketbutler
+
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/kasperhartwich/ticketbutler.svg?style=flat-square)](https://packagist.org/packages/kasperhartwich/ticketbutler)
+[![Tests](https://img.shields.io/github/actions/workflow/status/kasperhartwich/ticketbutler/tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/kasperhartwich/ticketbutler/actions/workflows/tests.yml)
+
+
 This is a client for the [Ticketbutler API](https://lab.ticketbutler.io).
 
 ## Installation
