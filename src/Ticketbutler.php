@@ -20,7 +20,7 @@ class Ticketbutler
                 'base_uri' => 'https://'.$domain.'/api/v3/',
                 RequestOptions::HEADERS => [
                     'Authorization' => 'Token '.$token,
-                    'User-Agent' => 'Tickerbutler/1.0 (https://github.com/kasperhartwich/ticketbutler)',
+                    'User-Agent' => 'TickerbutlerPHP (https://github.com/kasperhartwich/ticketbutler)',
                     'Content-Type' => 'application/json; charset=utf-8',
                 ],
             ]);
@@ -36,63 +36,63 @@ class Ticketbutler
     /** Events */
     public function getEvents(): array
     {
-        $response = $this->client->get('events/');
-
-        return (array) json_decode($response->getBody()->getContents(), true);
+        return $this->request('events/');
     }
 
     public function getEvent($eventUuid): array
     {
-        $response = $this->client->get('events/'.$eventUuid.'/');
-
-        return (array) json_decode($response->getBody()->getContents(), true);
+        return $this->request('events/'.$eventUuid.'/');
     }
 
     /** Ticket types */
     public function getEventTicketTypes($eventUuid): array
     {
-        $response = $this->client->get('events/'.$eventUuid.'/ticket-types/');
+        return $this->request('events/'.$eventUuid.'/ticket-types/');
+    }
 
-        return (array) json_decode($response->getBody()->getContents(), true);
+    /** Data Collection */
+    public function getTicketTypeQuestions($eventUuid): array
+    {
+        return $this->request('events/'.$eventUuid.'/ticket-type-questions/');
+    }
+
+    public function getPurchaseQuestions($eventUuid): array
+    {
+        return $this->request('events/'.$eventUuid.'/purchase-questions/');
+    }
+
+    public function getSpecificQuestion($eventUuid, $questionUuid): array
+    {
+        return $this->request('events/'.$eventUuid.'/questions/'.$questionUuid.'/');
     }
 
     /** Orders */
     public function getEventOrders($eventUuid): array
     {
-        $response = $this->client->get('events/'.$eventUuid.'/orders/');
-
-        return (array) json_decode($response->getBody()->getContents(), true);
+        return $this->request('events/'.$eventUuid.'/orders/');
     }
 
     public function getCollectedDataFromOrder($orderUuid): array
     {
-        $response = $this->client->get('orders/'.str_replace('-', '', $orderUuid).'/questions/');
-
-        return (array) json_decode($response->getBody()->getContents(), true);
+        return $this->request('orders/'.str_replace('-', '', $orderUuid).'/questions/');
     }
 
     /** Event Discount codes */
     public function getEventDiscountCodes($eventUuid): array
     {
-        $response = $this->client->get('events/'.$eventUuid.'/discount-codes/');
-
-        return (array) json_decode($response->getBody()->getContents(), true);
+        return $this->request('events/'.$eventUuid.'/discount-codes/');
     }
 
     /** Generic Discount codes */
     public function getGenericDiscountCodes($eventUuid): array
     {
-        $response = $this->client->get('discount-codes/');
-
-        return (array) json_decode($response->getBody()->getContents(), true);
+        return $this->request('discount-codes/');
     }
 
     /** Tickets */
     public function getTickets($uuid): array
     {
-        $response = $this->client->get('events/'.$uuid.'/tickets/');
-
-        return (array) json_decode($response->getBody()->getContents(), true);
+        return $this->request('events/'.$uuid.'/tickets/');
     }
 
     /** Platform Data Exporting */
@@ -100,15 +100,20 @@ class Ticketbutler
     {
         switch ($format) {
             case 'json':
-                $response = $this->client->get('whitelabel/newsletters/?format='.$format);
-
-                return (array) json_decode($response->getBody()->getContents(), true);
+                return $this->request('whitelabel/newsletters/?format='.$format);
             case 'xlsx':
-                $response = $this->client->get('whitelabel/newsletters/?format='.$format, [
-                    'Accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-                ]);
+                $html = $this->request(
+                    'whitelabel/newsletters/?format='.$format,
+                    'GET',
+                    'html',
+                    [
+                        RequestOptions::HEADERS => [
+                            'Accept' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                        ],
+                    ],
+                );
 
-                return (bool) str_contains($response->getBody()->getContents(), 'Email with newsletter data will be sent to');
+                return (bool) str_contains($html, 'Email with newsletter data will be sent to');
             default:
                 throw new \InvalidArgumentException('Invalid format. Only xlsx and json are supported.');
         }
@@ -116,12 +121,30 @@ class Ticketbutler
 
     public function getGetOrdersByMonth(?int $year = null, ?int $month = null, ?string $email = null): bool
     {
-        $response = $this->client->get('whitelabel/orders/?'.http_build_query(array_filter([
-            'year' => $year,
-            'month' => $month,
-            'email' => $email,
-        ])));
+        $response = $this->request(
+            'whitelabel/orders/?'.http_build_query(array_filter([
+                'year' => $year,
+                'month' => $month,
+                'email' => $email,
+            ])),
+            'GET',
+            'raw',
+        );
 
         return $response->getStatusCode() === 200;
+    }
+
+    protected function request($url, $method = 'GET', string $format = 'json', array $options = [])
+    {
+        $response = $this->client->request($method, $url, $options);
+        switch ($format) {
+            case 'json':
+                return (array) json_decode($response->getBody()->getContents(), true);
+            case 'html':
+                return $response->getBody()->getContents();
+            case 'raw':
+            default:
+                return $response;
+        }
     }
 }

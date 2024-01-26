@@ -18,8 +18,19 @@ You can install the package via composer:
 composer require kasperhartwich/ticketbutler
 ```
 
+## Usage
+
 Create a API token in your Ticketbutler account. You can find it under `General settings > API access`.
 
+### General
+``` php
+use Ticketbutler\Ticketbutler;
+
+$ticketbutler = new Ticketbutler('your-api-token', 'example.com');
+$tickets = $ticketbutler->getTickets();
+```
+    
+### Laravel
 Add your Ticketbutler token and domain key to your `.env` file:
 ``` dotenv
 TICKETBUTLER_TOKEN=your-token
@@ -31,17 +42,7 @@ If you want to publish the config file you can run:
 php artisan vendor:publish --tag=ticketbutler
 ```
 
-## Usage
-
-### General
-``` php
-use Ticketbutler\Ticketbutler;
-
-$ticketbutler = new Ticketbutler('your-api-token', 'example.com');
-$tickets = $ticketbutler->getTickets();
-```
-    
-### Laravel
+Using Ticketbutler in your controller:
 ``` php
 use Ticketbutler\Ticketbutler;
 
@@ -73,11 +74,11 @@ composer test
 | Ticket types            | Get Specific Ticket Type            | ❌                                         |
 | Ticket types            | Update Ticket Type                  | ❌                                         |
 | Ticket types            | Delete Ticket Type                  | ❌                                         |
-| Data Collection         | Get Ticket Type Questions           | ❌                                         |
-| Data Collection         | Get Purchase Questions              | ❌                                         |
+| Data Collection         | Get Ticket Type Questions           | ✅ `getTicketTypeQuestions($eventUuid)`    |
+| Data Collection         | Get Purchase Questions              | ✅ `getPurchaseQuestions($eventUuid)`      |
 | Data Collection         | Delete Ticket Type                  | ❌                                         |
 | Data Collection         | Create/Update Ticket Type Questions | ❌                                         |
-| Data Collection         | Get Specific Question               | ❌                                         |
+| Data Collection         | Get Specific Question               | ✅ `getSpecificQuestion($eventUuid)`       |
 | Data Collection         | Update Specific Question            | ❌                                         |
 | Data Collection         | Delete Specific Question            | ❌                                         |
 | Orders                  | Create Order                        | ❌                                         |
