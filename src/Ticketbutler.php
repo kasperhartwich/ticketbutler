@@ -39,7 +39,7 @@ class Ticketbutler
         return $this->request('events/');
     }
 
-    public function getEvent($eventUuid): array
+    public function getEvent($eventUuid): object
     {
         return $this->request('events/'.$eventUuid.'/');
     }
@@ -56,29 +56,29 @@ class Ticketbutler
         return $this->request('events/'.$eventUuid.'/ticket-type-questions/');
     }
 
-    public function getPurchaseQuestions($eventUuid): array
+    public function getPurchaseQuestions($eventUuid): object
     {
         return $this->request('events/'.$eventUuid.'/purchase-questions/');
     }
 
-    public function getSpecificQuestion($eventUuid, $questionUuid): array
+    public function getSpecificQuestion($eventUuid, $questionUuid): object
     {
         return $this->request('events/'.$eventUuid.'/questions/'.$questionUuid.'/');
     }
 
     /** Orders */
-    public function getEventOrders($eventUuid): array
+    public function getEventOrders($eventUuid): object
     {
         return $this->request('events/'.$eventUuid.'/orders/');
     }
 
-    public function getCollectedDataFromOrder($orderUuid): array
+    public function getCollectedDataFromOrder($orderUuid): object
     {
         return $this->request('orders/'.str_replace('-', '', $orderUuid).'/questions/');
     }
 
     /** Event Discount codes */
-    public function getEventDiscountCodes($eventUuid): array
+    public function getEventDiscountCodes($eventUuid): object
     {
         return $this->request('events/'.$eventUuid.'/discount-codes/');
     }
@@ -139,7 +139,7 @@ class Ticketbutler
         $response = $this->client->request($method, $url, $options);
         switch ($format) {
             case 'json':
-                return (array) json_decode($response->getBody()->getContents(), true);
+                return json_decode($response->getBody()->getContents());
             case 'html':
                 return $response->getBody()->getContents();
             case 'raw':

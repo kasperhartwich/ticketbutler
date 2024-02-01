@@ -16,9 +16,9 @@ final class TicketTypesTest extends TestCase
         ];
 
         $ticketTypes = $this->ticketbutler()->getEventTicketTypes('85c5effef5864bedb1ae0ac9d7a35bcd');
-        $this->assertSame('1dcbc650d655464fbab625371b22c0b6', $ticketTypes[0]['uuid']);
-        $this->assertSame('Regular Conference Ticket', $ticketTypes[0]['title']);
-        $this->assertSame(188, $ticketTypes[0]['amount_sold']);
-        $this->assertSame(620, $ticketTypes[0]['price']);
+        $this->assertSame('1dcbc650d655464fbab625371b22c0b6', $ticketTypes[0]->uuid);
+        $this->assertSame('Regular Conference Ticket', $ticketTypes[0]->title);
+        $this->assertSame(188, $ticketTypes[0]->amount_sold);
+        $this->assertSame(620, $ticketTypes[0]->price);
     }
 }

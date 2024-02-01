@@ -16,11 +16,11 @@ final class PlatformDataExportingTest extends TestCase
         ];
 
         $newsletterSignups = $this->ticketbutler()->getAllNewsletterSignups('json');
-        $this->assertSame('Jens', $newsletterSignups[0]['first_name']);
-        $this->assertSame('jens.jensen@example.com', $newsletterSignups[0]['email']);
+        $this->assertSame('Jens', $newsletterSignups[0]->first_name);
+        $this->assertSame('jens.jensen@example.com', $newsletterSignups[0]->email);
 
-        $this->assertSame('2024-01-03T20:40:55.753193+01:00', $newsletterSignups[1]['date_joined']);
-        $this->assertSame('test@example.org', $newsletterSignups[1]['email']);
+        $this->assertSame('2024-01-03T20:40:55.753193+01:00', $newsletterSignups[1]->date_joined);
+        $this->assertSame('test@example.org', $newsletterSignups[1]->email);
     }
 
     public function test_get_all_newsletter_signups_xlsx(): void

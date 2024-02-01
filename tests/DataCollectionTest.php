@@ -16,9 +16,9 @@ final class DataCollectionTest extends \Ticketbutler\Tests\TestCase
         ];
 
         $ticketTypeQuestions = $this->ticketbutler()->getTicketTypeQuestions('85c5effef5864bedb1ae0ac9d7a35bcd');
-        $this->assertTrue($ticketTypeQuestions[0]['active']);
-        $this->assertSame('Twitter', $ticketTypeQuestions[0]['questions'][1]['heading']);
-        $this->assertSame('TEXT', $ticketTypeQuestions[0]['questions'][1]['variation']);
+        $this->assertTrue($ticketTypeQuestions[0]->active);
+        $this->assertSame('Twitter', $ticketTypeQuestions[0]->questions[1]->heading);
+        $this->assertSame('TEXT', $ticketTypeQuestions[0]->questions[1]->variation);
     }
 
     public function test_get_purchase_questions(): void
@@ -32,10 +32,10 @@ final class DataCollectionTest extends \Ticketbutler\Tests\TestCase
         ];
 
         $purchaseQuestions = $this->ticketbutler()->getPurchaseQuestions('85c5effef5864bedb1ae0ac9d7a35bcd');
-        $this->assertTrue($purchaseQuestions['active']);
-        $this->assertTrue($purchaseQuestions['questions'][1]['active']);
-        $this->assertSame('City', $purchaseQuestions['questions'][1]['heading']);
-        $this->assertSame('TEXT', $purchaseQuestions['questions'][1]['variation']);
+        $this->assertTrue($purchaseQuestions->active);
+        $this->assertTrue($purchaseQuestions->questions[1]->active);
+        $this->assertSame('City', $purchaseQuestions->questions[1]->heading);
+        $this->assertSame('TEXT', $purchaseQuestions->questions[1]->variation);
     }
 
     public function test_get_specific_question(): void
@@ -49,8 +49,8 @@ final class DataCollectionTest extends \Ticketbutler\Tests\TestCase
         ];
 
         $question = $this->ticketbutler()->getSpecificQuestion('85c5effef5864bedb1ae0ac9d7a35bcd', '280a705c092d49d7aa8a1374b1067e93');
-        $this->assertTrue($question['active']);
-        $this->assertSame('Company', $question['heading']);
-        $this->assertSame('COMPANY', $question['variation']);
+        $this->assertTrue($question->active);
+        $this->assertSame('Company', $question->heading);
+        $this->assertSame('COMPANY', $question->variation);
     }
 }

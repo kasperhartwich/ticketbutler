@@ -16,10 +16,10 @@ final class DiscountCodesTest extends TestCase
         ];
 
         $eventOrders = $this->ticketbutler()->getEventDiscountCodes('85c5effef5864bedb1ae0ac9d7a35bcd');
-        $this->assertSame('FREETICKET', $eventOrders['results'][0]['code']);
-        $this->assertSame('100.00', $eventOrders['results'][0]['amount']);
+        $this->assertSame('FREETICKET', $eventOrders->results[0]->code);
+        $this->assertSame('100.00', $eventOrders->results[0]->amount);
 
-        $this->assertSame('20OFF', $eventOrders['results'][1]['code']);
-        $this->assertSame('397.50', $eventOrders['results'][1]['total_revenue']);
+        $this->assertSame('20OFF', $eventOrders->results[1]->code);
+        $this->assertSame('397.50', $eventOrders->results[1]->total_revenue);
     }
 }

@@ -17,9 +17,9 @@ final class EventsTest extends TestCase
         ];
 
         $events = $this->ticketbutler()->getEvents();
-        $this->assertSame('Laravel Live Denmark 2024', $events[0]['title']);
-        $this->assertSame('85c5effef5864bedb1ae0ac9d7a35bcd', $events[0]['uuid']);
-        $this->assertSame('http://laravellive.ticketbutler.io/e/laravel-live-denmark-2024/', $events[0]['url']);
+        $this->assertSame('Laravel Live Denmark 2024', $events[0]->title);
+        $this->assertSame('85c5effef5864bedb1ae0ac9d7a35bcd', $events[0]->uuid);
+        $this->assertSame('http://laravellive.ticketbutler.io/e/laravel-live-denmark-2024/', $events[0]->url);
     }
 
     public function test_get_specific_event(): void
@@ -33,8 +33,8 @@ final class EventsTest extends TestCase
         ];
 
         $event = $this->ticketbutler()->getEvent('85c5effef5864bedb1ae0ac9d7a35bcd');
-        $this->assertSame('Laravel Live Denmark 2024', $event['title']);
-        $this->assertSame('85c5effef5864bedb1ae0ac9d7a35bcd', $event['uuid']);
-        $this->assertSame('tickets@laravellive.dk', $event['address']['email']);
+        $this->assertSame('Laravel Live Denmark 2024', $event->title);
+        $this->assertSame('85c5effef5864bedb1ae0ac9d7a35bcd', $event->uuid);
+        $this->assertSame('tickets@laravellive.dk', $event->address->email);
     }
 }
