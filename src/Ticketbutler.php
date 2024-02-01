@@ -41,58 +41,58 @@ class Ticketbutler
 
     public function getEvent($eventUuid): object
     {
-        return $this->request('events/'.$eventUuid.'/');
+        return $this->request('events/'.$this->uuidToSlug($eventUuid).'/');
     }
 
     /** Ticket types */
     public function getEventTicketTypes($eventUuid): array
     {
-        return $this->request('events/'.$eventUuid.'/ticket-types/');
+        return $this->request('events/'.$this->uuidToSlug($eventUuid).'/ticket-types/');
     }
 
     /** Data Collection */
     public function getTicketTypeQuestions($eventUuid): array
     {
-        return $this->request('events/'.$eventUuid.'/ticket-type-questions/');
+        return $this->request('events/'.$this->uuidToSlug($eventUuid).'/ticket-type-questions/');
     }
 
     public function getPurchaseQuestions($eventUuid): object
     {
-        return $this->request('events/'.$eventUuid.'/purchase-questions/');
+        return $this->request('events/'.$this->uuidToSlug($eventUuid).'/purchase-questions/');
     }
 
     public function getSpecificQuestion($eventUuid, $questionUuid): object
     {
-        return $this->request('events/'.$eventUuid.'/questions/'.$questionUuid.'/');
+        return $this->request('events/'.$this->uuidToSlug($eventUuid).'/questions/'.$questionUuid.'/');
     }
 
     /** Orders */
     public function getEventOrders($eventUuid): object
     {
-        return $this->request('events/'.$eventUuid.'/orders/');
+        return $this->request('events/'.$this->uuidToSlug($eventUuid).'/orders/');
     }
 
     public function getCollectedDataFromOrder($orderUuid): object
     {
-        return $this->request('orders/'.str_replace('-', '', $orderUuid).'/questions/');
+        return $this->request('orders/'.$this->uuidToSlug($orderUuid).'/questions/');
     }
 
     /** Event Discount codes */
     public function getEventDiscountCodes($eventUuid): object
     {
-        return $this->request('events/'.$eventUuid.'/discount-codes/');
+        return $this->request('events/'.$this->uuidToSlug($eventUuid).'/discount-codes/');
     }
 
     /** Generic Discount codes */
-    public function getGenericDiscountCodes($eventUuid): array
+    public function getGenericDiscountCodes(): array
     {
         return $this->request('discount-codes/');
     }
 
     /** Tickets */
-    public function getTickets($uuid): array
+    public function getTickets($eventUuid): array
     {
-        return $this->request('events/'.$uuid.'/tickets/');
+        return $this->request('events/'.$this->uuidToSlug($eventUuid).'/tickets/');
     }
 
     /** Platform Data Exporting */
@@ -132,6 +132,11 @@ class Ticketbutler
         );
 
         return $response->getStatusCode() === 200;
+    }
+
+    protected function uuidToSlug($uuid): string
+    {
+        return str_replace('-', '', $uuid);
     }
 
     protected function request($url, $method = 'GET', string $format = 'json', array $options = [])

@@ -1,6 +1,5 @@
 <?php
 
-
 use GuzzleHttp\Psr7\Response;
 
 final class DataCollectionTest extends \Ticketbutler\Tests\TestCase
