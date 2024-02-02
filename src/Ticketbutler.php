@@ -67,6 +67,11 @@ class Ticketbutler
     }
 
     /** Orders */
+    public function getSpecificOrder($orderUuid): object
+    {
+        return $this->request('orders/'.$this->uuidToSlug($orderUuid).'/');
+    }
+
     public function getEventOrders($eventUuid): object
     {
         return $this->request('events/'.$this->uuidToSlug($eventUuid).'/orders/');
