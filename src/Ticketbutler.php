@@ -83,6 +83,23 @@ class Ticketbutler
         return $this->request('events/'.$eventUuid.'/discount-codes/');
     }
 
+    public function createEventDiscountCode($eventUuid, $data): object
+    {
+        return $this->request('events/'.str_replace('-', '', $eventUuid).'/discount-code/', 'POST', 'json', [
+            RequestOptions::JSON => $data,
+        ]);
+    }
+
+    public function toggleEventDiscountCode($eventUuid, $discountCodeId): object
+    {
+        return $this->request('events/'.str_replace('-', '', $eventUuid).'/discount-code/'.$discountCodeId.'/');
+    }
+
+    public function deleteEventDiscountCode($eventUuid, $codeUuid): object
+    {
+        return $this->request('events/'.str_replace('-', '', $eventUuid).'/discount-code/'.$codeUuid.'/');
+    }
+
     /** Generic Discount codes */
     public function getGenericDiscountCodes($eventUuid): array
     {

@@ -88,10 +88,10 @@ composer test
 | Orders                  | Refund an order                     | ❌                                         |
 | Orders                  | Collect Order Data                  | ❌                                         |
 | Orders                  | Get Collected Data from order       | ✅ `getCollectedDataFromOrder($orderUuid)` |
-| Event Discount codes    | Create a discount code              | ❌                                         |
+| Event Discount codes    | Create a discount code              | ✅ `createEventDiscountCode($eventUuid, $data)` |
 | Event Discount codes    | Get event discount codes            | ✅ `getEventDiscountCodes($eventUuid)`     |
-| Event Discount codes    | Toggle discount code                | ❌                                         |
-| Event Discount codes    | Delete discount codes               | ❌                                         |
+| Event Discount codes    | Toggle discount code                | ✅ `toggleEventDiscountCode($eventUuid, $discountCodeId)` |
+| Event Discount codes    | Delete discount codes               | ✅ `deleteEventDiscountCode($eventUuid, $codeUuid)` |
 | Generic Discount codes  | Create a discount code              | ❌                                         |
 | Generic Discount codes  | Get discount codes                  | ✅ `getGenericDiscountCodes($eventUuid)`   |
 | Generic Discount codes  | Toggle discount code                | ❌                                         |

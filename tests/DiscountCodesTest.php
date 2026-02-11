@@ -22,4 +22,58 @@ final class DiscountCodesTest extends TestCase
         $this->assertSame('20OFF', $eventOrders->results[1]->code);
         $this->assertSame('397.50', $eventOrders->results[1]->total_revenue);
     }
+
+    public function test_create_event_discount_code(): void
+    {
+        $this->httpResponses = [
+            new Response(
+                201,
+                ['Content-Type' => 'application/json'],
+                '{"id":50334,"active":true,"amount":"50.00","code":"HALFOFF","discount_type":"PERCENTAGE","usage_tickets_limit":10,"usage_limit_per_event":null}'
+            ),
+        ];
+
+        $result = $this->ticketbutler()->createEventDiscountCode('85c5effe-f586-4bed-b1ae-0ac9d7a35bcd', [
+            'code' => 'HALFOFF',
+            'amount' => '50.00',
+            'discount_type' => 'PERCENTAGE',
+            'usage_tickets_limit' => 10,
+        ]);
+
+        $this->assertSame(50334, $result->id);
+        $this->assertSame('HALFOFF', $result->code);
+        $this->assertSame('50.00', $result->amount);
+        $this->assertSame('PERCENTAGE', $result->discount_type);
+    }
+
+    public function test_toggle_event_discount_code(): void
+    {
+        $this->httpResponses = [
+            new Response(
+                200,
+                ['Content-Type' => 'application/json'],
+                '{"id":50333,"active":false,"code":"FREETICKET","amount":"100.00","discount_type":"PERCENTAGE"}'
+            ),
+        ];
+
+        $result = $this->ticketbutler()->toggleEventDiscountCode('85c5effe-f586-4bed-b1ae-0ac9d7a35bcd', 50333);
+
+        $this->assertSame(50333, $result->id);
+        $this->assertFalse($result->active);
+    }
+
+    public function test_delete_event_discount_code(): void
+    {
+        $this->httpResponses = [
+            new Response(
+                200,
+                ['Content-Type' => 'application/json'],
+                '{"id":50333,"deleted":true}'
+            ),
+        ];
+
+        $result = $this->ticketbutler()->deleteEventDiscountCode('85c5effe-f586-4bed-b1ae-0ac9d7a35bcd', '50333');
+
+        $this->assertSame(50333, $result->id);
+    }
 }
