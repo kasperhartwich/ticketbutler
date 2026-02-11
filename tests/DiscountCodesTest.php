@@ -76,4 +76,59 @@ final class DiscountCodesTest extends TestCase
 
         $this->assertSame(50333, $result->id);
     }
+
+    public function test_create_generic_discount_code(): void
+    {
+        $this->httpResponses = [
+            new Response(
+                201,
+                ['Content-Type' => 'application/json'],
+                '[{"id":8,"active":true,"amount":"1000.00","code":"hello_world","toggle_url":"/api/discount-code/8/","usage_tickets_limit":1,"amount_times_applied":0,"discount_type":"PER_TICKET"}]'
+            ),
+        ];
+
+        $result = $this->ticketbutler()->createGenericDiscountCode([
+            [
+                'amount' => '1000.00',
+                'code' => 'hello_world',
+                'usage_tickets_limit' => 1,
+                'discount_type' => 'PER_TICKET',
+            ],
+        ]);
+
+        $this->assertSame(8, $result[0]->id);
+        $this->assertSame('hello_world', $result[0]->code);
+        $this->assertSame('1000.00', $result[0]->amount);
+        $this->assertSame('PER_TICKET', $result[0]->discount_type);
+    }
+
+    public function test_toggle_generic_discount_code(): void
+    {
+        $this->httpResponses = [
+            new Response(
+                200,
+                ['Content-Type' => 'application/json'],
+                '{"id":8,"active":false,"amount":"1000.00","code":"hello_world","discount_type":"PER_TICKET"}'
+            ),
+        ];
+
+        $result = $this->ticketbutler()->toggleGenericDiscountCode(8);
+
+        $this->assertSame(8, $result->id);
+        $this->assertFalse($result->active);
+    }
+
+    public function test_delete_generic_discount_code(): void
+    {
+        $this->httpResponses = [
+            new Response(
+                200,
+                ['Content-Type' => 'application/json'],
+                '{}'
+            ),
+        ];
+
+        $result = $this->ticketbutler()->deleteGenericDiscountCode(8);
+        $this->assertIsObject($result);
+    }
 }

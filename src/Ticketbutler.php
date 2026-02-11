@@ -127,6 +127,23 @@ class Ticketbutler
         return $this->request('discount-codes/');
     }
 
+    public function createGenericDiscountCode(array $data): array
+    {
+        return $this->request('discount-code/', 'POST', 'json', [
+            RequestOptions::JSON => $data,
+        ]);
+    }
+
+    public function toggleGenericDiscountCode(int $codeId): object
+    {
+        return $this->request('discount-code/'.$codeId.'/', 'POST');
+    }
+
+    public function deleteGenericDiscountCode(int $codeId): object
+    {
+        return $this->request('discount-code/'.$codeId.'/', 'DELETE');
+    }
+
     /** Tickets */
     public function getTickets($uuid): array
     {

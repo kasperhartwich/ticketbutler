@@ -92,10 +92,10 @@ composer test
 | Event Discount codes    | Get event discount codes            | ✅ `getEventDiscountCodes($eventUuid)`     |
 | Event Discount codes    | Toggle discount code                | ✅ `toggleEventDiscountCode($eventUuid, $discountCodeId)` |
 | Event Discount codes    | Delete discount codes               | ✅ `deleteEventDiscountCode($eventUuid, $codeUuid)` |
-| Generic Discount codes  | Create a discount code              | ❌                                         |
+| Generic Discount codes  | Create a discount code              | ✅ `createGenericDiscountCode($data)`      |
 | Generic Discount codes  | Get discount codes                  | ✅ `getGenericDiscountCodes($eventUuid)`   |
-| Generic Discount codes  | Toggle discount code                | ❌                                         |
-| Generic Discount codes  | Delete doscount codes               | ❌                                         |
+| Generic Discount codes  | Toggle discount code                | ✅ `toggleGenericDiscountCode($codeId)`    |
+| Generic Discount codes  | Delete discount codes               | ✅ `deleteGenericDiscountCode($codeId)`    |
 | Tickets                 | Get event tickets                   | ✅ `getTickets()`                          |
 | Tickets                 | Get specific ticket                 | ❌                                         |
 | Tickets                 | Update ticket details               | ❌                                         |
