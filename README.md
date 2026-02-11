@@ -65,10 +65,10 @@ composer test
 | Section                 | Method                              | Supported                                 |
 |-------------------------|-------------------------------------|-------------------------------------------|
 | Events                  | Get all Events                      | ✅ `getEvents()`                           |
-| Events                  | Create an event                     | ❌                                         |
+| Events                  | Create an event                     | ✅ `createEvent($data)`                    |
 | Events                  | Get Specific Event                  | ✅ `getEvent($eventUuid)`                  |
-| Events                  | Update event                        | ❌                                         |
-| Events                  | Delete event                        | ❌                                         |
+| Events                  | Update event                        | ✅ `updateEvent($eventUuid, $data)`        |
+| Events                  | Delete event                        | ✅ `deleteEvent($eventUuid, $deleteReason)` |
 | Ticket types            | Get event ticket types              | ✅ `getEventTicketTypes($eventUuid)`       |
 | Ticket types            | Create Ticket Type                  | ❌                                         |
 | Ticket types            | Get Specific Ticket Type            | ❌                                         |

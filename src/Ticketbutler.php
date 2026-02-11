@@ -44,6 +44,27 @@ class Ticketbutler
         return $this->request('events/'.$eventUuid.'/');
     }
 
+    public function createEvent(array $data): object
+    {
+        return $this->request('events/', 'POST', 'json', [
+            RequestOptions::JSON => $data,
+        ]);
+    }
+
+    public function updateEvent(string $eventUuid, array $data): object
+    {
+        return $this->request('events/'.$eventUuid.'/', 'POST', 'json', [
+            RequestOptions::JSON => $data,
+        ]);
+    }
+
+    public function deleteEvent(string $eventUuid, string $deleteReason): object
+    {
+        return $this->request('events/'.$eventUuid.'/', 'DELETE', 'json', [
+            RequestOptions::JSON => ['delete_reason' => $deleteReason],
+        ]);
+    }
+
     /** Ticket types */
     public function getEventTicketTypes($eventUuid): array
     {

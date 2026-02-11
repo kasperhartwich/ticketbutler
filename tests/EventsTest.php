@@ -37,4 +37,55 @@ final class EventsTest extends TestCase
         $this->assertSame('85c5effef5864bedb1ae0ac9d7a35bcd', $event->uuid);
         $this->assertSame('tickets@laravellive.dk', $event->address->email);
     }
+
+    public function test_create_event(): void
+    {
+        $this->httpResponses = [
+            new Response(
+                201,
+                ['Content-Type' => 'application/json'],
+                '{"uuid":"aabbccdd11223344aabbccdd11223344","title":"New Test Event","start_date":"2025-06-15T10:00:00+02:00","ticket_types":[{"pk":1,"title":"General Admission","price":100}],"team":"8615: Laravel Denmark"}'
+            ),
+        ];
+
+        $event = $this->ticketbutler()->createEvent([
+            'title' => 'New Test Event',
+            'start_date' => '2025-06-15T10:00:00+02:00',
+            'ticket_types' => [['title' => 'General Admission', 'price' => 100]],
+            'team' => '8615: Laravel Denmark',
+        ]);
+        $this->assertSame('New Test Event', $event->title);
+        $this->assertSame('aabbccdd11223344aabbccdd11223344', $event->uuid);
+    }
+
+    public function test_update_event(): void
+    {
+        $this->httpResponses = [
+            new Response(
+                200,
+                ['Content-Type' => 'application/json'],
+                '{"uuid":"85c5effef5864bedb1ae0ac9d7a35bcd","title":"Updated Event Title","start_date":"2025-06-15T10:00:00+02:00"}'
+            ),
+        ];
+
+        $event = $this->ticketbutler()->updateEvent('85c5effef5864bedb1ae0ac9d7a35bcd', [
+            'title' => 'Updated Event Title',
+        ]);
+        $this->assertSame('Updated Event Title', $event->title);
+        $this->assertSame('85c5effef5864bedb1ae0ac9d7a35bcd', $event->uuid);
+    }
+
+    public function test_delete_event(): void
+    {
+        $this->httpResponses = [
+            new Response(
+                200,
+                ['Content-Type' => 'application/json'],
+                '{}'
+            ),
+        ];
+
+        $result = $this->ticketbutler()->deleteEvent('85c5effef5864bedb1ae0ac9d7a35bcd', 'No longer needed');
+        $this->assertIsObject($result);
+    }
 }
