@@ -88,6 +88,11 @@ class Ticketbutler
     }
 
     /** Orders */
+    public function getSpecificOrder($orderUuid): object
+    {
+        return $this->request('orders/'.str_replace('-', '', $orderUuid).'/');
+    }
+
     public function getEventOrders($eventUuid): object
     {
         return $this->request('events/'.$eventUuid.'/orders/');
@@ -122,7 +127,7 @@ class Ticketbutler
     }
 
     /** Generic Discount codes */
-    public function getGenericDiscountCodes($eventUuid): array
+    public function getGenericDiscountCodes(): array
     {
         return $this->request('discount-codes/');
     }

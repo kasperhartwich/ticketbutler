@@ -6,6 +6,21 @@ use GuzzleHttp\Psr7\Response;
 
 final class OrdersTest extends TestCase
 {
+    public function test_get_specific_order(): void
+    {
+        $this->httpResponses = [
+            new Response(
+                200,
+                ['Content-Type' => 'application/json'],
+                '{"address":{"whitelabel":3989,"first_name":"Test","last_name":"Testesen","title":"","business_name":"","cvr":"","ean":"","ean_reference":"","street":"","street_2":"","city":"","postcode":"","country":"","phone":"+4530888000","email":"test@laravellive.dk","language":"en","full_address":"","pk":2721940,"venue":null},"uuid":"13e0a4ca6565403f818f61872ab82613","state":"REFUND","tickets":[{"amount":1,"tickets":[{"full_name":"Test Testesen","uuid":"99fd2005b9e54715992e371ac44fdd18"}]}]}'),
+        ];
+
+        $eventOrder = $this->ticketbutler()->getSpecificOrder('85c5effef5864bedb1ae0ac9d7a35bcd');
+        $this->assertSame('13e0a4ca6565403f818f61872ab82613', $eventOrder->uuid);
+        $this->assertSame('Test Testesen', $eventOrder->tickets[0]->tickets[0]->full_name);
+        $this->assertSame('REFUND', $eventOrder->state);
+    }
+
     public function test_get_event_orders(): void
     {
         $this->httpResponses = [

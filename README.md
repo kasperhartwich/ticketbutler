@@ -82,7 +82,7 @@ composer test
 | Data Collection         | Update Specific Question            | ❌                                         |
 | Data Collection         | Delete Specific Question            | ❌                                         |
 | Orders                  | Create Order                        | ❌                                         |
-| Orders                  | Get a Specific Order                | ❌                                         |
+| Orders                  | Get a Specific Order                | ✅ `getSpecificOrder($orderUuid)`          |
 | Orders                  | Get events orders                   | ✅ `getEventOrders($eventUuid)`            |
 | Orders                  | Update order                        | ❌                                         |
 | Orders                  | Refund an order                     | ❌                                         |
@@ -93,7 +93,7 @@ composer test
 | Event Discount codes    | Toggle discount code                | ✅ `toggleEventDiscountCode($eventUuid, $discountCodeId)` |
 | Event Discount codes    | Delete discount codes               | ✅ `deleteEventDiscountCode($eventUuid, $codeUuid)` |
 | Generic Discount codes  | Create a discount code              | ✅ `createGenericDiscountCode($data)`      |
-| Generic Discount codes  | Get discount codes                  | ✅ `getGenericDiscountCodes($eventUuid)`   |
+| Generic Discount codes  | Get discount codes                  | ✅ `getGenericDiscountCodes()`             |
 | Generic Discount codes  | Toggle discount code                | ✅ `toggleGenericDiscountCode($codeId)`    |
 | Generic Discount codes  | Delete discount codes               | ✅ `deleteGenericDiscountCode($codeId)`    |
 | Tickets                 | Get event tickets                   | ✅ `getTickets()`                          |
