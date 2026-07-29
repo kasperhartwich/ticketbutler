@@ -39,7 +39,7 @@ TICKETBUTLER_DOMAIN=example.com
 
 If you want to publish the config file you can run:
 ``` bash
-php artisan vendor:publish --tag=ticketbutler
+php artisan vendor:publish --tag=ticketbutler-config
 ```
 
 Using Ticketbutler in your controller:
@@ -102,7 +102,7 @@ composer test
 | Tickets                 | Collect Ticket Data                 | ❌                                         |
 | Tickets                 | Get Ticket Specific Questions       | ❌                                         |
 | Platform Data Exporting | Get all newsletter signups          | ✅ `getAllNewsletterSignups()`             |
-| Platform Data Exporting | Get Orders by Month                 | ✅ `getGetOrdersByMonth()`                 |
+| Platform Data Exporting | Get Orders by Month                 | ✅ `getOrdersByMonth()`                    |
 
 ## License
 

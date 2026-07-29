@@ -6,7 +6,7 @@ use GuzzleHttp\Psr7\Response;
 
 final class PingTest extends TestCase
 {
-    public function testPing(): void
+    public function test_ping(): void
     {
         $this->httpResponses = [
             new Response(200),

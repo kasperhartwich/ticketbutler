@@ -40,6 +40,14 @@ final class PlatformDataExportingTest extends TestCase
     {
         $this->httpResponses = [new Response(200)];
 
+        $emailSent = $this->ticketbutler()->getOrdersByMonth(2024, 1, 'test@example.org');
+        $this->assertTrue($emailSent);
+    }
+
+    public function test_get_orders_by_month_deprecated_alias(): void
+    {
+        $this->httpResponses = [new Response(200)];
+
         $emailSent = $this->ticketbutler()->getGetOrdersByMonth(2024, 1, 'test@example.org');
         $this->assertTrue($emailSent);
     }

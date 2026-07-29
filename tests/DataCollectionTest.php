@@ -1,9 +1,9 @@
 <?php
 
-
 use GuzzleHttp\Psr7\Response;
+use Ticketbutler\Tests\TestCase;
 
-final class DataCollectionTest extends \Ticketbutler\Tests\TestCase
+final class DataCollectionTest extends TestCase
 {
     public function test_get_ticket_type_questions(): void
     {

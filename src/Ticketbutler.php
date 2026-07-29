@@ -20,7 +20,7 @@ class Ticketbutler
                 'base_uri' => 'https://'.$domain.'/api/v3/',
                 RequestOptions::HEADERS => [
                     'Authorization' => 'Token '.$token,
-                    'User-Agent' => 'TickerbutlerPHP (https://github.com/kasperhartwich/ticketbutler)',
+                    'User-Agent' => 'TicketbutlerPHP (https://github.com/kasperhartwich/ticketbutler)',
                     'Content-Type' => 'application/json; charset=utf-8',
                 ],
             ]);
@@ -179,7 +179,7 @@ class Ticketbutler
         }
     }
 
-    public function getGetOrdersByMonth(?int $year = null, ?int $month = null, ?string $email = null): bool
+    public function getOrdersByMonth(?int $year = null, ?int $month = null, ?string $email = null): bool
     {
         $response = $this->request(
             'whitelabel/orders/?'.http_build_query(array_filter([
@@ -192,6 +192,14 @@ class Ticketbutler
         );
 
         return $response->getStatusCode() === 200;
+    }
+
+    /**
+     * @deprecated Use getOrdersByMonth() instead.
+     */
+    public function getGetOrdersByMonth(?int $year = null, ?int $month = null, ?string $email = null): bool
+    {
+        return $this->getOrdersByMonth($year, $month, $email);
     }
 
     protected function request($url, $method = 'GET', string $format = 'json', array $options = [])
