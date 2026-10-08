@@ -55,6 +55,61 @@ class MyController extends Controller
 }
 ```
 
+### Return values
+Methods return the API's JSON decoded into `stdClass` objects, or arrays of them for endpoints that answer with a list:
+
+``` php
+$event = $ticketbutler->getEvent('your-event-uuid');
+echo $event->title;
+
+foreach ($ticketbutler->getEvents() as $event) {
+    echo $event->uuid;
+}
+```
+
+A few methods return a boolean instead: `ping()` and `getOrdersByMonth()` return `true` when the API answers with status 200, and `getAllNewsletterSignups('xlsx')` returns `true` when the API confirms that it will email the export.
+
+### Errors
+Requests are made with [Guzzle](https://docs.guzzlephp.org/), and its exceptions are passed on unchanged. With the default client:
+
+- `GuzzleHttp\Exception\ClientException` for 4xx responses (an invalid token, an unknown UUID, invalid data),
+- `GuzzleHttp\Exception\ServerException` for 5xx responses,
+- `GuzzleHttp\Exception\ConnectException` when the API cannot be reached.
+
+All of them implement `GuzzleHttp\Exception\GuzzleException`. A 4xx or 5xx exception carries the response, so you can read the API's error message:
+
+``` php
+use GuzzleHttp\Exception\ClientException;
+
+try {
+    $event = $ticketbutler->getEvent('unknown-uuid');
+} catch (ClientException $e) {
+    $status = $e->getResponse()->getStatusCode();
+    $body = (string) $e->getResponse()->getBody();
+}
+```
+
+### Custom HTTP client
+You can pass your own Guzzle client as the third argument, for example to set timeouts or add middleware. The token and domain are then not used, so the client must set the base URI and the `Authorization` header itself:
+
+``` php
+use GuzzleHttp\Client;
+use Ticketbutler\Ticketbutler;
+
+$client = new Client([
+    'base_uri' => 'https://example.com/api/v3/',
+    'headers' => [
+        'Authorization' => 'Token your-api-token',
+        'Content-Type' => 'application/json; charset=utf-8',
+    ],
+    'timeout' => 30,
+]);
+
+$ticketbutler = new Ticketbutler('your-api-token', 'example.com', $client);
+```
+
+Keep Guzzle's `http_errors` option on (the default), or 4xx and 5xx responses will not throw the exceptions listed under [Errors](#errors).
+
 ## Testing
 
 ``` bash
