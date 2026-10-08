@@ -17,6 +17,7 @@ final class EventsTest extends TestCase
         ];
 
         $events = $this->ticketbutler()->getEvents();
+        $this->assertRequest('GET', 'events/');
         $this->assertSame('Laravel Live Denmark 2024', $events[0]->title);
         $this->assertSame('85c5effef5864bedb1ae0ac9d7a35bcd', $events[0]->uuid);
         $this->assertSame('http://laravellive.ticketbutler.io/e/laravel-live-denmark-2024/', $events[0]->url);
@@ -33,6 +34,7 @@ final class EventsTest extends TestCase
         ];
 
         $event = $this->ticketbutler()->getEvent('85c5effef5864bedb1ae0ac9d7a35bcd');
+        $this->assertRequest('GET', 'events/85c5effef5864bedb1ae0ac9d7a35bcd/');
         $this->assertSame('Laravel Live Denmark 2024', $event->title);
         $this->assertSame('85c5effef5864bedb1ae0ac9d7a35bcd', $event->uuid);
         $this->assertSame('tickets@laravellive.dk', $event->address->email);
@@ -49,6 +51,12 @@ final class EventsTest extends TestCase
         ];
 
         $event = $this->ticketbutler()->createEvent([
+            'title' => 'New Test Event',
+            'start_date' => '2025-06-15T10:00:00+02:00',
+            'ticket_types' => [['title' => 'General Admission', 'price' => 100]],
+            'team' => '8615: Laravel Denmark',
+        ]);
+        $this->assertRequest('POST', 'events/', '', [
             'title' => 'New Test Event',
             'start_date' => '2025-06-15T10:00:00+02:00',
             'ticket_types' => [['title' => 'General Admission', 'price' => 100]],
@@ -71,6 +79,7 @@ final class EventsTest extends TestCase
         $event = $this->ticketbutler()->updateEvent('85c5effef5864bedb1ae0ac9d7a35bcd', [
             'title' => 'Updated Event Title',
         ]);
+        $this->assertRequest('POST', 'events/85c5effef5864bedb1ae0ac9d7a35bcd/', '', ['title' => 'Updated Event Title']);
         $this->assertSame('Updated Event Title', $event->title);
         $this->assertSame('85c5effef5864bedb1ae0ac9d7a35bcd', $event->uuid);
     }
@@ -86,6 +95,17 @@ final class EventsTest extends TestCase
         ];
 
         $result = $this->ticketbutler()->deleteEvent('85c5effef5864bedb1ae0ac9d7a35bcd', 'No longer needed');
+        $this->assertRequest('DELETE', 'events/85c5effef5864bedb1ae0ac9d7a35bcd/', '', ['delete_reason' => 'No longer needed']);
         $this->assertIsObject($result);
+    }
+
+    public function test_delete_event_with_an_empty_response(): void
+    {
+        $this->httpResponses = [new Response(200)];
+
+        $result = $this->ticketbutler()->deleteEvent('85c5effef5864bedb1ae0ac9d7a35bcd', 'No longer needed');
+
+        $this->assertRequest('DELETE', 'events/85c5effef5864bedb1ae0ac9d7a35bcd/', '', ['delete_reason' => 'No longer needed']);
+        $this->assertEquals(new \stdClass, $result);
     }
 }

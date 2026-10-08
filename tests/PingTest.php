@@ -13,5 +13,13 @@ final class PingTest extends TestCase
         ];
 
         $this->assertTrue($this->ticketbutler()->ping());
+        $this->assertRequest('GET', 'ping/');
+    }
+
+    public function test_a_request_without_a_queued_response_never_reaches_the_api(): void
+    {
+        $this->expectException(\OutOfBoundsException::class);
+
+        $this->ticketbutler()->ping();
     }
 }
