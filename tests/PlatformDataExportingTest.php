@@ -16,6 +16,7 @@ final class PlatformDataExportingTest extends TestCase
         ];
 
         $newsletterSignups = $this->ticketbutler()->getAllNewsletterSignups('json');
+        $this->assertRequest('GET', 'whitelabel/newsletters/', 'format=json');
         $this->assertSame('Jens', $newsletterSignups[0]->first_name);
         $this->assertSame('jens.jensen@example.com', $newsletterSignups[0]->email);
 
@@ -33,6 +34,11 @@ final class PlatformDataExportingTest extends TestCase
         ];
 
         $emailSent = $this->ticketbutler()->getAllNewsletterSignups('xlsx');
+        $this->assertRequest('GET', 'whitelabel/newsletters/', 'format=xlsx');
+        $this->assertSame(
+            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            $this->lastRequest()->getHeaderLine('Accept'),
+        );
         $this->assertTrue($emailSent);
     }
 
@@ -41,6 +47,7 @@ final class PlatformDataExportingTest extends TestCase
         $this->httpResponses = [new Response(200)];
 
         $emailSent = $this->ticketbutler()->getOrdersByMonth(2024, 1, 'test@example.org');
+        $this->assertRequest('GET', 'whitelabel/orders/', 'year=2024&month=1&email=test%40example.org');
         $this->assertTrue($emailSent);
     }
 
@@ -49,6 +56,7 @@ final class PlatformDataExportingTest extends TestCase
         $this->httpResponses = [new Response(200)];
 
         $emailSent = $this->ticketbutler()->getGetOrdersByMonth(2024, 1, 'test@example.org');
+        $this->assertRequest('GET', 'whitelabel/orders/', 'year=2024&month=1&email=test%40example.org');
         $this->assertTrue($emailSent);
     }
 }

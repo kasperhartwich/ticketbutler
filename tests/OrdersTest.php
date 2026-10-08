@@ -16,6 +16,7 @@ final class OrdersTest extends TestCase
         ];
 
         $eventOrder = $this->ticketbutler()->getSpecificOrder('85c5effef5864bedb1ae0ac9d7a35bcd');
+        $this->assertRequest('GET', 'orders/85c5effef5864bedb1ae0ac9d7a35bcd/');
         $this->assertSame('13e0a4ca6565403f818f61872ab82613', $eventOrder->uuid);
         $this->assertSame('Test Testesen', $eventOrder->tickets[0]->tickets[0]->full_name);
         $this->assertSame('REFUND', $eventOrder->state);
@@ -31,6 +32,7 @@ final class OrdersTest extends TestCase
         ];
 
         $eventOrders = $this->ticketbutler()->getEventOrders('85c5effef5864bedb1ae0ac9d7a35bcd');
+        $this->assertRequest('GET', 'events/85c5effef5864bedb1ae0ac9d7a35bcd/orders/');
         $this->assertSame('13e0a6ca-6865-403f-818f-61872ab83724', $eventOrders->orders[0]->uuid);
         $this->assertSame('Test Testesen', $eventOrders->orders[0]->tickets[0]->full_name);
         $this->assertSame('REFUND', $eventOrders->orders[0]->state);
@@ -50,6 +52,7 @@ final class OrdersTest extends TestCase
 
         $answers = $this->ticketbutler()->getCollectedDataFromOrder('d2fc0aa0-42cc-4410-be9b-9107ede843cc');
 
+        $this->assertRequest('GET', 'orders/d2fc0aa042cc4410be9b9107ede843cc/questions/');
         $this->assertSame('d2fc0aa042cc4410be9b9107ede843cc', $answers->purchase);
         $this->assertSame('Company', $answers->answers[0]->question_heading);
         $this->assertSame('Super Firma', $answers->answers[0]->answer_value);

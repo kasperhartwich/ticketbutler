@@ -16,6 +16,7 @@ final class DiscountCodesTest extends TestCase
         ];
 
         $eventOrders = $this->ticketbutler()->getEventDiscountCodes('85c5effef5864bedb1ae0ac9d7a35bcd');
+        $this->assertRequest('GET', 'events/85c5effef5864bedb1ae0ac9d7a35bcd/discount-codes/');
         $this->assertSame('FREETICKET', $eventOrders->results[0]->code);
         $this->assertSame('100.00', $eventOrders->results[0]->amount);
 
@@ -40,6 +41,12 @@ final class DiscountCodesTest extends TestCase
             'usage_tickets_limit' => 10,
         ]);
 
+        $this->assertRequest('POST', 'events/85c5effef5864bedb1ae0ac9d7a35bcd/discount-code/', '', [
+            'code' => 'HALFOFF',
+            'amount' => '50.00',
+            'discount_type' => 'PERCENTAGE',
+            'usage_tickets_limit' => 10,
+        ]);
         $this->assertSame(50334, $result->id);
         $this->assertSame('HALFOFF', $result->code);
         $this->assertSame('50.00', $result->amount);
@@ -96,6 +103,14 @@ final class DiscountCodesTest extends TestCase
             ],
         ]);
 
+        $this->assertRequest('POST', 'discount-code/', '', [
+            [
+                'amount' => '1000.00',
+                'code' => 'hello_world',
+                'usage_tickets_limit' => 1,
+                'discount_type' => 'PER_TICKET',
+            ],
+        ]);
         $this->assertSame(8, $result[0]->id);
         $this->assertSame('hello_world', $result[0]->code);
         $this->assertSame('1000.00', $result[0]->amount);
@@ -114,6 +129,7 @@ final class DiscountCodesTest extends TestCase
 
         $result = $this->ticketbutler()->toggleGenericDiscountCode(8);
 
+        $this->assertRequest('POST', 'discount-code/8/');
         $this->assertSame(8, $result->id);
         $this->assertFalse($result->active);
     }
@@ -129,6 +145,7 @@ final class DiscountCodesTest extends TestCase
         ];
 
         $result = $this->ticketbutler()->deleteGenericDiscountCode(8);
+        $this->assertRequest('DELETE', 'discount-code/8/');
         $this->assertIsObject($result);
     }
 }

@@ -16,6 +16,7 @@ final class TicketsTest extends TestCase
         ];
 
         $tickets = $this->ticketbutler()->getTickets('85c5effef5864bedb1ae0ac9d7a35bcd');
+        $this->assertRequest('GET', 'events/85c5effef5864bedb1ae0ac9d7a35bcd/tickets/');
         $this->assertSame('Test Testesen', $tickets[0]->full_name);
         $this->assertSame('8d47755c-60ec-4116-9c16-5eccbc678665', $tickets[0]->uuid);
         $this->assertSame('test@testesen.dk', $tickets[0]->email);
