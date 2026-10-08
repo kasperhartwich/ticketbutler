@@ -12,7 +12,7 @@ final class PlatformDataExportingTest extends TestCase
             new Response(
                 200,
                 ['Content-Type' => 'application/json'],
-                '[{"first_name":"Jens","last_name":"jensen","date_joined":"2024-01-11T21:41:21.076482+01:00","email":"jens.jensen@example.com","newsletter_event":"Laravel Live Denmark 2024","team":"Laravel Denmark"},{"first_name":"Test","last_name":"Kasper","date_joined":"2024-01-03T20:40:55.753193+01:00","email":"test@example.org","newsletter_event":"Laravel Live Denmark 2024","team":"Laravel Denmark"}]'),
+                '[{"first_name":"Jens","last_name":"jensen","date_joined":"2024-01-11T21:41:21.076482+01:00","email":"jens.jensen@example.com","newsletter_event":"Laravel Live Denmark 2024","team":"Laravel Denmark"},{"first_name":"Test","last_name":"Testesen","date_joined":"2024-01-03T20:40:55.753193+01:00","email":"test@example.org","newsletter_event":"Laravel Live Denmark 2024","team":"Laravel Denmark"}]'),
         ];
 
         $newsletterSignups = $this->ticketbutler()->getAllNewsletterSignups('json');
