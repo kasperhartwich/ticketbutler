@@ -157,6 +157,12 @@ composer test
 | Tickets                 | Get Ticket Specific Questions       | ❌                                         |
 | Platform Data Exporting | Get all newsletter signups          | ✅ `getAllNewsletterSignups()`             |
 | Platform Data Exporting | Get Orders by Month                 | ✅ `getOrdersByMonth()`                    |
+| Webhooks                | Test access to the webhooks         | ❌                                         |
+| Webhooks                | Create webhook                      | ❌                                         |
+| Webhooks                | List webhooks                       | ❌                                         |
+| Webhooks                | Get webhook                         | ❌                                         |
+| Webhooks                | Update webhook                      | ❌                                         |
+| Webhooks                | Delete webhook                      | ❌                                         |
 
 ## License
 
