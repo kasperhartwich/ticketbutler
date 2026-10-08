@@ -34,9 +34,9 @@ class Ticketbutler
     }
 
     /** Events */
-    public function getEvents(): array
+    public function getEvents(bool $old = false): array
     {
-        return $this->request('events/');
+        return $this->request($old ? 'events/?old=true' : 'events/');
     }
 
     public function getEvent($eventUuid): object

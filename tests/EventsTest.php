@@ -23,6 +23,16 @@ final class EventsTest extends TestCase
         $this->assertSame('http://laravellive.ticketbutler.io/e/laravel-live-denmark-2024/', $events[0]->url);
     }
 
+    public function test_get_events_including_expired(): void
+    {
+        $this->httpResponses = [new Response(200, ['Content-Type' => 'application/json'], '[]')];
+
+        $events = $this->ticketbutler()->getEvents(old: true);
+
+        $this->assertRequest('GET', 'events/', 'old=true');
+        $this->assertSame([], $events);
+    }
+
     public function test_get_specific_event(): void
     {
         $this->httpResponses = [
