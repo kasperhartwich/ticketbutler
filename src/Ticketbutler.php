@@ -118,12 +118,12 @@ class Ticketbutler
 
     public function toggleEventDiscountCode($eventUuid, $discountCodeId): object
     {
-        return $this->request('events/'.str_replace('-', '', $eventUuid).'/discount-code/'.$discountCodeId.'/');
+        return $this->request('events/'.str_replace('-', '', $eventUuid).'/discount-code/'.$discountCodeId.'/', 'POST');
     }
 
     public function deleteEventDiscountCode($eventUuid, $codeUuid): object
     {
-        return $this->request('events/'.str_replace('-', '', $eventUuid).'/discount-code/'.$codeUuid.'/');
+        return $this->request('events/'.str_replace('-', '', $eventUuid).'/discount-code/'.$codeUuid.'/', 'DELETE');
     }
 
     /** Generic Discount codes */

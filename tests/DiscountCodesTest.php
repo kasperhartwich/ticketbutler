@@ -65,6 +65,7 @@ final class DiscountCodesTest extends TestCase
 
         $result = $this->ticketbutler()->toggleEventDiscountCode('85c5effe-f586-4bed-b1ae-0ac9d7a35bcd', 50333);
 
+        $this->assertRequest('POST', 'events/85c5effef5864bedb1ae0ac9d7a35bcd/discount-code/50333/');
         $this->assertSame(50333, $result->id);
         $this->assertFalse($result->active);
     }
@@ -81,6 +82,7 @@ final class DiscountCodesTest extends TestCase
 
         $result = $this->ticketbutler()->deleteEventDiscountCode('85c5effe-f586-4bed-b1ae-0ac9d7a35bcd', '50333');
 
+        $this->assertRequest('DELETE', 'events/85c5effef5864bedb1ae0ac9d7a35bcd/discount-code/50333/');
         $this->assertSame(50333, $result->id);
     }
 
