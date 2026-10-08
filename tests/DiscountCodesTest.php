@@ -86,6 +86,16 @@ final class DiscountCodesTest extends TestCase
         $this->assertSame(50333, $result->id);
     }
 
+    public function test_delete_event_discount_code_with_an_empty_response(): void
+    {
+        $this->httpResponses = [new Response(200)];
+
+        $result = $this->ticketbutler()->deleteEventDiscountCode('85c5effef5864bedb1ae0ac9d7a35bcd', '50333');
+
+        $this->assertRequest('DELETE', 'events/85c5effef5864bedb1ae0ac9d7a35bcd/discount-code/50333/');
+        $this->assertEquals(new \stdClass, $result);
+    }
+
     public function test_create_generic_discount_code(): void
     {
         $this->httpResponses = [
@@ -149,5 +159,15 @@ final class DiscountCodesTest extends TestCase
         $result = $this->ticketbutler()->deleteGenericDiscountCode(8);
         $this->assertRequest('DELETE', 'discount-code/8/');
         $this->assertIsObject($result);
+    }
+
+    public function test_delete_generic_discount_code_with_an_empty_response(): void
+    {
+        $this->httpResponses = [new Response(200)];
+
+        $result = $this->ticketbutler()->deleteGenericDiscountCode(8);
+
+        $this->assertRequest('DELETE', 'discount-code/8/');
+        $this->assertEquals(new \stdClass, $result);
     }
 }

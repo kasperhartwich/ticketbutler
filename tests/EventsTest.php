@@ -98,4 +98,14 @@ final class EventsTest extends TestCase
         $this->assertRequest('DELETE', 'events/85c5effef5864bedb1ae0ac9d7a35bcd/', '', ['delete_reason' => 'No longer needed']);
         $this->assertIsObject($result);
     }
+
+    public function test_delete_event_with_an_empty_response(): void
+    {
+        $this->httpResponses = [new Response(200)];
+
+        $result = $this->ticketbutler()->deleteEvent('85c5effef5864bedb1ae0ac9d7a35bcd', 'No longer needed');
+
+        $this->assertRequest('DELETE', 'events/85c5effef5864bedb1ae0ac9d7a35bcd/', '', ['delete_reason' => 'No longer needed']);
+        $this->assertEquals(new \stdClass, $result);
+    }
 }
