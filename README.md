@@ -20,14 +20,14 @@ composer require kasperhartwich/ticketbutler
 
 ## Usage
 
-Create a API token in your Ticketbutler account. You can find it under `General settings > API access`.
+Create an API token in your Ticketbutler account. You can find it under `General settings > API access`.
 
 ### General
 ``` php
 use Ticketbutler\Ticketbutler;
 
 $ticketbutler = new Ticketbutler('your-api-token', 'example.com');
-$tickets = $ticketbutler->getTickets();
+$tickets = $ticketbutler->getTickets('your-event-uuid');
 ```
     
 ### Laravel
@@ -50,7 +50,7 @@ class MyController extends Controller
 {
     public function index(Ticketbutler $ticketbutler)
     {
-        $tickets = $ticketbutler->getTickets();
+        $tickets = $ticketbutler->getTickets('your-event-uuid');
     }
 }
 ```
@@ -76,9 +76,8 @@ composer test
 | Ticket types            | Delete Ticket Type                  | ❌                                         |
 | Data Collection         | Get Ticket Type Questions           | ✅ `getTicketTypeQuestions($eventUuid)`    |
 | Data Collection         | Get Purchase Questions              | ✅ `getPurchaseQuestions($eventUuid)`      |
-| Data Collection         | Delete Ticket Type                  | ❌                                         |
 | Data Collection         | Create/Update Ticket Type Questions | ❌                                         |
-| Data Collection         | Get Specific Question               | ✅ `getSpecificQuestion($eventUuid)`       |
+| Data Collection         | Get Specific Question               | ✅ `getSpecificQuestion($eventUuid, $questionUuid)` |
 | Data Collection         | Update Specific Question            | ❌                                         |
 | Data Collection         | Delete Specific Question            | ❌                                         |
 | Orders                  | Create Order                        | ❌                                         |
@@ -96,7 +95,7 @@ composer test
 | Generic Discount codes  | Get discount codes                  | ✅ `getGenericDiscountCodes()`             |
 | Generic Discount codes  | Toggle discount code                | ✅ `toggleGenericDiscountCode($codeId)`    |
 | Generic Discount codes  | Delete discount codes               | ✅ `deleteGenericDiscountCode($codeId)`    |
-| Tickets                 | Get event tickets                   | ✅ `getTickets()`                          |
+| Tickets                 | Get event tickets                   | ✅ `getTickets($eventUuid)`                |
 | Tickets                 | Get specific ticket                 | ❌                                         |
 | Tickets                 | Update ticket details               | ❌                                         |
 | Tickets                 | Collect Ticket Data                 | ❌                                         |
