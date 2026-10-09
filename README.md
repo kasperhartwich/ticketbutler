@@ -64,7 +64,7 @@ composer test
 ## Supported API methods
 | Section                 | Method                              | Supported                                 |
 |-------------------------|-------------------------------------|-------------------------------------------|
-| Events                  | Get all Events                      | ✅ `getEvents()`                           |
+| Events                  | Get all Events                      | ✅ `getEvents($old = false)`               |
 | Events                  | Create an event                     | ✅ `createEvent($data)`                    |
 | Events                  | Get Specific Event                  | ✅ `getEvent($eventUuid)`                  |
 | Events                  | Update event                        | ✅ `updateEvent($eventUuid, $data)`        |
@@ -103,6 +103,8 @@ composer test
 | Tickets                 | Get Ticket Specific Questions       | ❌                                         |
 | Platform Data Exporting | Get all newsletter signups          | ✅ `getAllNewsletterSignups()`             |
 | Platform Data Exporting | Get Orders by Month                 | ✅ `getOrdersByMonth()`                    |
+
+`getEvents()` lists only events that have not expired. Call `getEvents(old: true)` to include expired events too.
 
 ## License
 
